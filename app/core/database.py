@@ -8,6 +8,11 @@ engine = create_async_engine(
     settings.DATABASE_URL,
     echo=True,  # Cambiar a False en producción si no deseas ver los logs de SQL
     future=True,
+    pool_pre_ping=True,  # <--- Verifica si la conexión sigue viva antes de usarla
+    connect_args={
+        "statement_cache_size": 0,
+        "prepared_statement_cache_size": 0,
+    },
 )
 
 # Fabrica de sesiones asíncronas
