@@ -46,4 +46,10 @@ class Space(Base):
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
 
-    host = relationship("User", backref="spaces")
+    availabilities = relationship(
+        "Availability", back_populates="space", cascade="all, delete-orphan"
+    )
+    bookings = relationship(
+        "Booking", back_populates="space", cascade="all, delete-orphan"
+    )
+    host = relationship("User", back_populates="spaces")

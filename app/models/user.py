@@ -2,6 +2,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 
@@ -19,3 +20,8 @@ class User(Base):
     hashed_password = Column(String(255), nullable=False)
     is_host = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    spaces = relationship("Space", back_populates="host", cascade="all, delete-orphan")
+    bookings = relationship(
+        "Booking", back_populates="user", cascade="all, delete-orphan"
+    )
