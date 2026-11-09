@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from typing import Optional
 import uuid
 from datetime import datetime
@@ -23,10 +23,7 @@ class UserResponse(UserBase):
     is_host: bool
     created_at: datetime
 
-    class Config:
-        from_attributes = (
-            True  # Permite leer datos directamente desde modelos ORM de SQLAlchemy
-        )
+    model_config = ConfigDict(from_attributes=True)
 
 
 # Esquemas para el Login y Token JWT
@@ -38,3 +35,12 @@ class UserLogin(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+class UserUpdate(BaseModel):
+    full_name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
+    is_host: Optional[bool] = None
+
+    model_config = ConfigDict(from_attributes=True)
