@@ -88,3 +88,7 @@ class TestJWTValidation:
     async def test_token_with_non_uuid_sub_returns_401(self, async_client):
         r = await async_client.get(ME_URL, headers=bearer(make_token("no-soy-un-uuid")))
         assert r.status_code == 401
+
+    async def test_token_without_sub_returns_401(self, async_client):
+        r = await async_client.get(ME_URL, headers=bearer(make_token(None)))
+        assert r.status_code == 401
