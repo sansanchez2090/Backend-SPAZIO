@@ -8,6 +8,7 @@ from datetime import datetime
 class UserBase(BaseModel):
     email: EmailStr
     full_name: str
+    is_host: bool = False
 
 
 # Esquema para cuando un usuario se registra (Entrada)

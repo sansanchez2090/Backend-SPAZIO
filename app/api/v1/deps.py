@@ -27,9 +27,8 @@ async def get_current_user(
             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
         )
         user_id = uuid.UUID(payload.get("sub"))
-        if user_id is None:
-            raise credentials_exception
-    except JWTError:
+    except (JWTError, ValueError, TypeError):
+        # ValueError: sub no es un UUID | TypeError: el token no trae sub
         raise credentials_exception
 
     user = await user_service.get_user_by_id(db, user_id=user_id)
