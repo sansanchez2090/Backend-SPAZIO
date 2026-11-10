@@ -1,4 +1,4 @@
-# tests/test_users.py  (versión esencial)
+# tests/test_users.py
 import uuid
 
 import pytest
