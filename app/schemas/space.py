@@ -1,5 +1,6 @@
 # app/schemas/space.py
 import uuid
+from datetime import datetime
 from typing import Optional, List, Any
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 from app.models.space import SpaceCategory
@@ -68,3 +69,23 @@ class SpaceResponse(BaseModel):
             except Exception:
                 pass
         return values
+
+
+class SpaceCreateResponse(SpaceResponse):
+    """Respuesta al publicar (RF-03): informa si la publicación activó el rol de anfitrión."""
+
+    host_role_activated: bool = False
+
+
+class AvailabilityWindow(BaseModel):
+    """Horario (periodo de disponibilidad) mostrado en los resultados de búsqueda."""
+
+    start_time: datetime
+    end_time: datetime
+
+
+class SpaceNearbyResponse(SpaceResponse):
+    """Resultado de búsqueda por ubicación (RF-01): distancia, horario y precio."""
+
+    distance_meters: float
+    availabilities: List[AvailabilityWindow] = []
