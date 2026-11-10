@@ -1,5 +1,13 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import auth, users, spaces, availabilities, bookings, payments
+from app.api.v1.endpoints import (
+    auth,
+    users,
+    spaces,
+    availabilities,
+    bookings,
+    payments,
+    geocoding,
+)
 
 api_router = APIRouter()
 
@@ -12,5 +20,8 @@ api_router.include_router(
 )
 api_router.include_router(bookings.router, prefix="/bookings", tags=["Reservas"])
 api_router.include_router(
-    payments.router, prefix="/payments", tags=["Pagos y Pasarela (Wompi Simulada)"]
+    payments.router, prefix="/payments", tags=["Pagos y Pasarela (Wompi)"]
+)
+api_router.include_router(
+    geocoding.router, prefix="/geocode", tags=["Geocodificación (OpenStreetMap)"]
 )
