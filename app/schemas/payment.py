@@ -24,3 +24,17 @@ class PaymentResponse(BaseModel):
     created_at: Any  # o datetime según tu importación
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class WompiCheckoutResponse(BaseModel):
+    public_key: str
+    currency: str
+    amount_in_cents: int
+    reference: str
+    signature: str
+    redirect_url: Optional[str] = None
+
+
+class WompiPaymentVerify(BaseModel):
+    booking_id: UUID
+    transaction_id: str
